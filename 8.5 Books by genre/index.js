@@ -1,7 +1,6 @@
 const { ApolloServer } = require('@apollo/server');
 const { startStandaloneServer } = require('@apollo/server/standalone');
 // const { v4: uuidv4 } = require('uuid');
-
 // uuidv4(); // ⇨ '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
 
 let authors = [
@@ -112,7 +111,7 @@ const typeDefs = `
   type Query {
     bookCount: Int!
     authorCount: Int!
-    allBooks(author: String): [Book!]
+    allBooks(author: String, genre: String): [Book!]
     allAuthors: [Author!]!
   }
 `;
@@ -122,10 +121,20 @@ const resolvers = {
     bookCount: () => books.length,
     authorCount: () => authors.length,
     allBooks: (root, args) => {
-      // console.log(args.author);
-      if (!args.author) return books;
-
-      return books.filter((book) => book.author === args.author);
+      console.log(args);
+      if (args.author && args.genre)
+        return books.filter(
+          (book) =>
+            book.author === args.author &&
+            book.genres.find((genre) => genre === args.genre)
+        );
+      else if (args.author)
+        return books.filter((book) => book.author === args.author);
+      else if (args.genre)
+        return books.filter((book) =>
+          book.genres.find((genre) => genre === args.genre)
+        );
+      else return books;
     },
     allAuthors: () => {
       // Calculate bookCount for each author
