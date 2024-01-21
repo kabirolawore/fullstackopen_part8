@@ -16,5 +16,17 @@
   },
   "devDependencies": {
     "@types/uuid": "^9.0.7"
+  },
+  "exports": {
+    ".": {
+      "node": {
+        "module": "./dist/esm-node/index.js",
+        "require": "./dist/index.js",
+        "import": "./wrapper.mjs"
+      },
+      "default": "./dist/esm-browser/index.js"
+    },
+    "./package.json": "./package.json",
+    "./v1": "./dist/v1.js"
   }
 }
