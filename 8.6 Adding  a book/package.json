@@ -13,5 +13,8 @@
     "@apollo/server": "^4.10.0",
     "graphql": "^16.8.1",
     "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/uuid": "^9.0.7"
   }
 }
